@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_centerInParent="true"
+    android:layout_margin="@dimen/activity_horizontal_margin"
+    android:background="@color/primary_dark"
+    >
+
+    <TextView
+        android:id="@+id/app_category_item_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:textSize="19sp"
+        android:drawablePadding="9dp"
+        android:padding="5dp"
+        android:layout_marginBottom="@dimen/activity_horizontal_margin"
+        android:textAppearance="?android:attr/textAppearanceButton"
+        android:text="@string/app_category_education_str"
+        android:layout_alignParentBottom="true"
+        >
+    </TextView>
+    <ImageView
+        android:id="@+id/app_category_item_icon"
+        android:scaleType="centerCrop"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@id/app_category_item_title"
+        android:src="@mipmap/category_advisory_news"
+        android:padding="5dp"
+        android:layout_margin="4dp"
+        />
+
+</RelativeLayout>

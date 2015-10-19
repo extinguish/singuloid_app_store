@@ -1,0 +1,39 @@
+<resources>
+    <string name="app_name">SinguloidAppStore</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="app_store_title">App Store</string>
+
+    <!-- the following are the basic title of the AppStore fragment -->
+    <string name="fragment_categoty_title_str">Category</string>
+    <string name="fragment_rank_title_str">Rank</string>
+    <string name="fragment_newest_title_str">Newest</string>
+    <string name="fragment_manage_title_str">Management</string>
+    
+    <!-- the category of the apps -->
+    <!-- we just predefined some types at here, and the value may add in the future -->
+    <string name="app_category_tools_str">Utilities</string>
+    <string name="app_category_theme_wallpaper_str">Theme Wallpaper</string>
+    <string name="app_category_social_messenger_str">Social Communication</string>
+    <string name="app_category_photo_beautiful_str">Shooting Landscape</string>
+    <string name="app_category_multimedia_str">AV Video</string>
+    <string name="app_category_enjoy_life_str">LifeStyle Shopping</string>
+    <string name="app_category_finicial_shopping_str">Financial Shopping</string>
+    <string name="app_category_education_str">Education</string>
+    <string name="app_category_news_reading_str">Advisory News</string>
+    <string name="app_category_travel_str">Travel</string>
+    <string name="app_category_game_str">Game</string>
+
+    <!-- the state of the app item -->
+    <string name="app_market_open">open</string>
+    <string name="app_market_install">install</string>
+
+    <!-- the state of the app manage button -->
+    <string name="app_state_init">Download</string>
+    <string name="app_state_downloaded">Open</string>
+    <string name="app_state_downloading">Pause</string>
+    <string name="app_state_error">Error</string>
+
+</resources>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.singuloid.singuloidappstore.lib.tabview.STabLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@id/viewpagertab"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/stab_height"
+    android:clipToPadding="false"
+    android:paddingBottom="8dp"
+    android:paddingLeft="4dp"
+    android:paddingRight="4dp"
+    app:defaultTabTextColor="@color/text_color"
+    app:defaultTabTextHorizontalPadding="20dp"
+    app:dividerColor="@android:color/transparent"
+    app:dividerThickness="0dp"
+    app:indicatorColor="@color/indicator_color"
+    app:indicatorCornerRadius="9dp"
+    app:indicatorInterpolation="linear"
+    app:indicatorThickness="40dp"
+    app:underlineColor="@color/transparent"
+    app:underlineThickness="0dp"
+    app:distributeEvenly="true"
+
+    >
+
+</com.singuloid.singuloidappstore.lib.tabview.STabLayout>

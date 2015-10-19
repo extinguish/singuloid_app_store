@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SinguloidAppStore</string>
+
+    <string name="action_settings">设置</string>
+
+    <string name="app_store_title">应用商店</string>
+
+    <!-- the following are the basic title of the AppStore fragment -->
+    <string name="fragment_categoty_title_str">分类</string>
+    <string name="fragment_rank_title_str">排名</string>
+    <string name="fragment_newest_title_str">最新</string>
+    <string name="fragment_manage_title_str">管理</string>
+    <!-- the category of the apps -->
+    <!-- we just predefined some types at here, and the value may add in the future -->
+    <string name="app_category_tools_str">实用工具</string>
+    <string name="app_category_theme_wallpaper_str">主题壁纸</string>
+    <string name="app_category_social_messenger_str">社交通讯</string>
+    <string name="app_category_photo_beautiful_str">拍摄美化</string>
+    <string name="app_category_multimedia_str">影音视频</string>
+    <string name="app_category_enjoy_life_str">生活实用</string>
+    <string name="app_category_finicial_shopping_str">理财购物</string>
+    <string name="app_category_education_str">学习教育</string>
+    <string name="app_category_news_reading_str">咨询阅读</string>
+    <string name="app_category_travel_str">旅游出行</string>
+    <string name="app_category_game_str">游戏</string>
+    
+    <!-- the state of the app item -->
+    <string name="app_market_open">打开</string>
+    <string name="app_market_install">安装</string>
+
+    <!-- 每一个Item的管理状态-->
+    <!-- 目前我们可以控制的状态只有三种，但是真正的状态可能不止三种
+         在实际调试时再进行增加和修改 -->
+    <string name="app_state_init">安装</string>
+    <string name="app_state_downloaded">打开</string>
+    <string name="app_state_downloading">暂停</string>
+    <string name="app_state_error">错误</string>
+
+</resources>

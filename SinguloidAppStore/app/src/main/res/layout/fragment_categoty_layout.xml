@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.SwipeRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/category_refresh_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/grid_background">
+
+    <GridView
+        android:id="@+id/app_category_grid"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginRight="@dimen/fragment_margin_right"
+        android:layout_marginLeft="@dimen/fragment_margin_left"
+        android:layout_marginTop="@dimen/fragment_margin_top"
+        android:numColumns="3"
+        android:layout_alignParentTop="true"
+        android:gravity="center"
+        android:animateLayoutChanges="true"
+        android:verticalSpacing="@dimen/app_category_vertical_spacing"
+        android:horizontalSpacing="@dimen/app_category_horizontal_spacing"
+        >
+    </GridView>
+
+</android.support.v4.widget.SwipeRefreshLayout>

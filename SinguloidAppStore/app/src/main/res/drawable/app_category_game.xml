@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_pressed="true">
+        <layer-list>
+            <item>
+                <bitmap android:src="@mipmap/category_game" />
+            </item>
+            <item>
+                <shape android:shape="rectangle">
+                    <corners android:radius="9dp"/>
+                    <padding android:bottom="4dp"
+                             android:left="4dp"
+                             android:right="4dp"
+                             android:top="4dp"/>
+                    <solid android:color="@android:color/darker_gray"/>
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+
+    <!-- the default state -->
+    <item>
+        <layer-list>
+            <item>
+                <bitmap android:src="@mipmap/category_game" />
+            </item>
+        </layer-list>
+    </item>
+</selector>

@@ -1,0 +1,20 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="android:Theme.Material.Light.NoActionBar.Fullscreen">
+        <item name="android:colorPrimary">@color/primary</item>
+        <item name="android:colorPrimaryDark">@color/primary_dark</item>
+        <item name="android:colorAccent">@color/accent</item>
+        <item name="android:navigationBarColor">@color/primary</item>
+    </style>
+
+    <!-- the theme for activity without actionbar set -->
+    <style name="AppTheme.NoActionBar" parent="AppTheme">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:colorPrimary">@color/primary</item>
+        <item name="android:colorPrimaryDark">@color/primary_dark</item>
+        <item name="android:colorAccent">@color/accent</item>
+    </style>
+
+
+</resources>
