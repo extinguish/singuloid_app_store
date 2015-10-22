@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.util.Log;
 
 import com.singuloid.singuloidappstore.adapter.apploader.LocalInstalledAppListLoader;
 
@@ -19,17 +20,26 @@ public class InstalledAppsObserver extends BroadcastReceiver {
         this.mAppListLoader = loader;
 
         // register this BroadcastReceiver
-        IntentFilter intentFilter = new IntentFilter(Intent.ACTION_PACKAGE_ADDED);
-        intentFilter.addAction(Intent.ACTION_PACKAGE_REMOVED);
-        intentFilter.addAction(Intent.ACTION_PACKAGE_CHANGED);
-        intentFilter.addDataScheme("package");
-        // register the action for
-        mAppListLoader.getContext().registerReceiver(this, intentFilter);
+        // register for events like Package installed/updated/uninstalled
+        IntentFilter pkgIntentFilter = new IntentFilter(Intent.ACTION_PACKAGE_ADDED);
+        pkgIntentFilter.addAction(Intent.ACTION_PACKAGE_REMOVED);
+        pkgIntentFilter.addAction(Intent.ACTION_PACKAGE_CHANGED);
+        pkgIntentFilter.addDataScheme("package");
+        mAppListLoader.getContext().registerReceiver(this, pkgIntentFilter);
 
+        // register the action for sdcard mounted or unmounted
+        // user may install app on the external sdcard
+        IntentFilter sdcardIntentFilter = new IntentFilter(Intent.ACTION_EXTERNAL_APPLICATIONS_AVAILABLE);
+        sdcardIntentFilter.addAction(Intent.ACTION_EXTERNAL_APPLICATIONS_UNAVAILABLE);
+        mAppListLoader.getContext().registerReceiver(this, sdcardIntentFilter);
     }
 
     @Override
     public void onReceive(Context context, Intent intent) {
-
+        Log.d(TAG, " the event action we received are : " + intent.getAction().toString());
+        // notify the load has been
+        if (null != mAppListLoader) {
+            mAppListLoader.onContentChanged();
+        }
     }
 }

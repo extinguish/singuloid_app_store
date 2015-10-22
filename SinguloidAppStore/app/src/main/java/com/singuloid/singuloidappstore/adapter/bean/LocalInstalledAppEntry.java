@@ -5,6 +5,7 @@ import android.content.pm.ApplicationInfo;
 import android.graphics.drawable.Drawable;
 
 import com.singuloid.singuloidappstore.adapter.apploader.LocalInstalledAppListLoader;
+import com.singuloid.singuloidappstore.util.Utils;
 
 import java.io.File;
 
@@ -20,6 +21,7 @@ public class LocalInstalledAppEntry {
     private String mAppName;
     private Drawable mAppIcon;
     private boolean mMounted;
+    private String mAppVersion = "0.0";
 
     public LocalInstalledAppEntry(LocalInstalledAppListLoader loader, ApplicationInfo appInfo) {
         this.mLoader = loader;
@@ -36,6 +38,7 @@ public class LocalInstalledAppEntry {
     }
 
     public Drawable getAppIcon() {
+
         if (mAppIcon == null) {
             if (mApkFile.exists()) {
                 mAppIcon = mAppInfo.loadIcon(mLoader.mPkgMgr);
@@ -57,6 +60,8 @@ public class LocalInstalledAppEntry {
         // if something exception happened
         // possibly for the cause of the busy working
         // in such case, we just load the default icon will be enough
+        // TODO: in future implementation, we just encapsulate the getDrawable()
+        // TODO: method in a better non deprecated version
         return mLoader.getContext().getResources().getDrawable(android.R.drawable.sym_def_app_icon);
     }
 
@@ -77,5 +82,24 @@ public class LocalInstalledAppEntry {
                 mAppName = name != null ? name.toString() : mAppInfo.packageName;
             }
         }
+    }
+
+    public void setAppVersion(String num) {
+        this.mAppVersion = num;
+    }
+
+    public String getAppVersion() {
+        return mAppVersion;
+    }
+
+    public String getAppSize() {
+        if (mApkFile.exists()) {
+            // get the raw size of the APK file
+            // and the returned value are in bytes.
+            long fileSize = mApkFile.length();
+            // convert the bytes to MillionBytes
+            return Utils.convertByteToMB(fileSize);
+        }
+        return "0.0M";
     }
 }

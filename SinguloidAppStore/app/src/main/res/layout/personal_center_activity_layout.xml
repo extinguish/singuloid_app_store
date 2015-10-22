@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PersonalCenterActivity">
+
+    <LinearLayout
+        android:id="@+id/personal_header"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/primary">
+
+        <Toolbar
+            android:id="@id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="?android:attr/actionBarSize"
+            android:popupTheme="@android:style/ThemeOverlay.Material.Light"
+            android:theme="@android:style/ThemeOverlay.Material.Light"
+            >
+
+            <TextView
+                android:id="@+id/personal_title"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:padding="6dp"
+                android:text="@string/app_store_title"
+                android:textStyle="bold"
+                android:textSize="17sp"
+                android:layout_gravity="center"
+                />
+            <!-- the search icon -->
+            <ImageView
+                android:id="@+id/personal_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_vertical"
+                android:src="@android:drawable/ic_menu_search"
+                android:layout_marginRight="4dp"
+                android:padding="4dp"/>
+
+            <!-- the following are the search container -->
+            <!-- Create the search container -->
+
+        </Toolbar>
+
+        <!-- the following are the tab component -->
+        <FrameLayout
+            android:id="@id/tab"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/stab_height">
+
+        </FrameLayout>
+    </LinearLayout>
+
+    <!-- the view pager of which manages all of the basic app management fragment-->
+    <android.support.v4.view.ViewPager
+        android:id="@id/viewpager"
+        android:layout_below="@id/personal_header"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </android.support.v4.view.ViewPager>
+</RelativeLayout>

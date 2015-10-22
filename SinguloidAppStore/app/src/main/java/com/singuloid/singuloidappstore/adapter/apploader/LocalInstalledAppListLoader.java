@@ -1,10 +1,15 @@
 package com.singuloid.singuloidappstore.adapter.apploader;
 
-import android.content.AsyncTaskLoader;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.support.v4.content.AsyncTaskLoader;
+import android.util.Log;
 
+import com.singuloid.singuloidappstore.adapter.appobserver.InstalledAppsObserver;
+import com.singuloid.singuloidappstore.adapter.appobserver.SystemLocaleObserver;
 import com.singuloid.singuloidappstore.adapter.bean.LocalInstalledAppEntry;
 
 import java.text.Collator;
@@ -21,10 +26,15 @@ import java.util.List;
  *
  */
 public class LocalInstalledAppListLoader extends AsyncTaskLoader<List<LocalInstalledAppEntry>> {
-    private static final String TAG = "LocalInstalledAppListLoader";
+    private static final String TAG = "installAppLoader";
 
     private List<LocalInstalledAppEntry> mAppList;
     public final PackageManager mPkgMgr;
+
+    // the observer to notify when app state changed in the system
+    private InstalledAppsObserver mInstalledAppsObserver;
+    // the observer to notify when system locale changed in the system
+    private SystemLocaleObserver mSystemLocaleObserver;
 
     public LocalInstalledAppListLoader(Context context) {
         super(context);
@@ -58,9 +68,23 @@ public class LocalInstalledAppListLoader extends AsyncTaskLoader<List<LocalInsta
         List<LocalInstalledAppEntry> appEntryList = new ArrayList<>(allInstalledApp.size());
         // create a corresponding array of entries and load their labels
         for (ApplicationInfo appInfo : allInstalledApp) {
-            LocalInstalledAppEntry appEntry = new LocalInstalledAppEntry(this, appInfo);
-            appEntry.loadAppName(getContext());
-            appEntryList.add(appEntry);
+            // parse out the downloaded app, what we need are the downloaded app only
+            if ((mPkgMgr.getLaunchIntentForPackage(appInfo.packageName) != null) && ((appInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 0)) {
+                String appVersion = "0.0";
+                // parse out the installed app version info
+                try {
+                    PackageInfo pkgInfo = mPkgMgr.getPackageInfo(appInfo.packageName, 0);
+                    appVersion = pkgInfo.versionName;
+                } catch (PackageManager.NameNotFoundException e) {
+                    e.printStackTrace();
+                }
+                Log.d(TAG, " the app version we get are : " + appVersion);
+                LocalInstalledAppEntry appEntry = new LocalInstalledAppEntry(this, appInfo);
+                appEntry.loadAppName(getContext());
+                appEntry.setAppVersion(appVersion);
+                appEntryList.add(appEntry);
+
+            }
         }
         // sort this list, and the we sort it in alpha by default
         // TODO: provides even more comparing rules at
@@ -72,7 +96,7 @@ public class LocalInstalledAppListLoader extends AsyncTaskLoader<List<LocalInsta
     }
 
     @Override
-    public void deliverResult(List<LocalInstalledAppEntry> data) {
+    public void deliverResult(List<LocalInstalledAppEntry> newData) {
         if (isReset()) {
             // if this load has been reset, if this loader is not started
             // first time been called, then the following process will be triggered
@@ -82,35 +106,114 @@ public class LocalInstalledAppListLoader extends AsyncTaskLoader<List<LocalInsta
             // thread is finishes her work, and attempts to deliver the result to the
             // client, she will she here that the Loader has been reset and discard any
             // result that has been retrieved so far as necessary
-            if (data != null) {
-
+            if (newData != null) {
+                releaseResource(newData);
                 return;
             }
-
         }
 
-        super.deliverResult(data);
+        // Hold a reference to the old data so it does not get garbage collected
+        // we must protect this data until the new data is available
+        List<LocalInstalledAppEntry> oldAppList = mAppList;
+        mAppList = newData;
 
+        if (isStarted()) {
+            // if the Loader is already in started state, then we need to have the super
+            // class to deliver the result to the client
+            super.deliverResult(newData);
+        }
+
+        // invalidate the old data, as we do not need it anymore
+        if (oldAppList != null && oldAppList != newData) {
+            Log.d(TAG, " we need to release the old app list ");
+            releaseResource(oldAppList);
+        }
+    }
+
+    @Override
+    protected void onStartLoading() {
+        Log.d(TAG, " on start loading ");
+        if (mAppList != null) {
+            // deliver the previous loaded data immediately
+            deliverResult(mAppList);
+        }
+
+        // register the observers that will notify the Loader when changes made
+        if (null == mInstalledAppsObserver) {
+            mInstalledAppsObserver = new InstalledAppsObserver(this);
+        }
+
+        if (null == mSystemLocaleObserver) {
+            mSystemLocaleObserver = new SystemLocaleObserver(this);
+        }
+
+        if (takeContentChanged()) {
+            // when the observer detects that the content has been changed in the system, she will call
+            // the onContentChanged() on the Loader, will will cause the next call to takeContentChanged() to
+            // return true, then, we need to call forceLoad() method
+            Log.d(TAG, " the content has been changed in the ");
+            forceLoad();
+        } else if (mAppList == null) {
+            // if the current data is null, we need to call forceLoad() to load the data
+            forceLoad();
+        }
     }
 
     @Override
     protected void onStopLoading() {
-        super.onStopLoading();
+
+        // the Loader has been put in a stopped state, so we should attempt to cancel
+        // the current loading process ( if there is one)
+        cancelLoad();
+
+        // note that we leave the observer as is; while the loader is in stopped state
+        // but still need to monitor the data source for changing, so that the loader
+        // will know to force a new load if it is ever start again
     }
 
     @Override
     protected void onReset() {
         // first, to ensure that the loader is stopped
+        onStopLoading();
 
+        // at this point we can release the resource associated with 'apps'
+        if (null != mAppList) {
+            releaseResource(mAppList);
+            mAppList = null;
+        }
 
-        super.onReset();
+        // the loader is being reset, so we should stop monitoring for changes
+        if (null != mInstalledAppsObserver) {
+            getContext().unregisterReceiver(mInstalledAppsObserver);
+            mInstalledAppsObserver = null;
+        }
+
+        if (null != mSystemLocaleObserver) {
+            getContext().unregisterReceiver(mSystemLocaleObserver);
+            mSystemLocaleObserver = null;
+        }
+    }
+
+    @Override
+    public void onCanceled(List<LocalInstalledAppEntry> data) {
+        super.onCanceled(data);
+
+        // the load has been cancelled, and we should also release the data
+        // we load thus to save our memory
+        releaseResource(data);
+    }
+
+    @Override
+    public void forceLoad() {
+        super.forceLoad();
     }
 
     private void releaseResource(List<LocalInstalledAppEntry> data) {
         // All resources associated with the Loader should be released at here
-        // TODO: provide the detailed implementation at here
-
+        data.clear();
     }
+
+
 
     private static final Comparator<LocalInstalledAppEntry> ALPHA_COMPARATOR = new Comparator<LocalInstalledAppEntry>() {
         Collator collator = Collator.getInstance();

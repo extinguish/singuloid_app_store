@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Pair;
 import android.view.LayoutInflater;
@@ -14,11 +15,11 @@ import android.widget.GridView;
 import com.singuloid.singuloidappstore.R;
 import com.singuloid.singuloidappstore.adapter.AppCategoryAdapter;
 import com.singuloid.singuloidappstore.adapter.bean.AppCategoryBean;
-import com.singuloid.singuloidappstore.util.AppCategoryConstants;
+import com.singuloid.singuloidappstore.lib.DeletegateRefreshLayout;
+import com.singuloid.singuloidappstore.lib.ViewDelegate;
+import com.singuloid.singuloidappstore.util.AppCategoryContract;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by scguo on 15/10/16.
@@ -26,10 +27,10 @@ import java.util.Map;
  * The fragment of which using to display the main category of the
  * AppCategory
  */
-public class AppCategoryFragment extends Fragment {
+public class AppCategoryFragment extends Fragment implements ViewDelegate {
 
     private static final String TAG = "CategoryFragment";
-    private SwipeRefreshLayout mSwipeRefreshLayout;
+    private DeletegateRefreshLayout mSwipeRefreshLayout;
     private GridView mGrid;
 
     @Nullable
@@ -44,9 +45,8 @@ public class AppCategoryFragment extends Fragment {
         // TODO: the following logic should not put here, and improve later
         // TODO: if time is sufficient, try the MVP pattern to make this Fragment
         // TODO: even more robust
-        mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.category_refresh_container);
-        mSwipeRefreshLayout.setColorSchemeResources(getResources().getIntArray(R.array.refresh_colors));
-        mSwipeRefreshLayout.setOnRefreshListener(new OnCategoryUpdatedListener());
+        mSwipeRefreshLayout = (DeletegateRefreshLayout) view.findViewById(R.id.category_refresh_container);
+        setupRefreshLayout();
 
         mGrid = (GridView) view.findViewById(R.id.app_category_grid);
         ArrayList<AppCategoryBean> list = convertLocalDataToList(readLocalSet());
@@ -55,12 +55,18 @@ public class AppCategoryFragment extends Fragment {
 
     }
 
+    private void setupRefreshLayout() {
+        mSwipeRefreshLayout.setColorSchemeColors(getResources().getIntArray(R.array.refresh_colors));
+        mSwipeRefreshLayout.setOnRefreshListener(new OnCategoryUpdatedListener());
+        mSwipeRefreshLayout.setViewDelegate(this);
+    }
+
     /**
      * @return the container of which contains all of the basic data
      */
     private static ArrayList<Pair<Integer, Integer>> readLocalSet() {
         ArrayList<Pair<Integer, Integer>> localDataSet = new ArrayList<>();
-        for (AppCategoryConstants categoryConstants : AppCategoryConstants.values()) {
+        for (AppCategoryContract categoryConstants : AppCategoryContract.values()) {
             localDataSet.add(new Pair<>(categoryConstants.mName, categoryConstants.mImgRes));
         }
         return localDataSet;
@@ -76,6 +82,11 @@ public class AppCategoryFragment extends Fragment {
             }
         }
         return list;
+    }
+
+    @Override
+    public boolean isReadyForPull() {
+        return ViewCompat.canScrollVertically(mGrid, -1);
     }
 
     private class OnCategoryUpdatedListener implements SwipeRefreshLayout.OnRefreshListener {

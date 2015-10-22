@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:expandable="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- the layout file for the AppItem detailed info -->
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:btn="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/app_market_item_container"
+        android:background="@drawable/app_item_bg">
+
+        <ImageView
+            android:id="@+id/app_item_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="8dp"
+            />
+
+        <TextView
+            android:id="@+id/app_item_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/app_item_icon"
+            android:text="AppStore"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:layout_alignTop="@id/app_item_icon"
+            android:layout_marginLeft="14dp"
+            />
+
+        <TextView
+            android:id="@+id/app_item_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2.3M"
+            android:layout_below="@id/app_item_title"
+            android:layout_toRightOf="@id/app_item_icon"
+            android:layout_marginTop="9dp"
+            android:layout_marginLeft="14dp"
+            android:textSize="18sp"
+            />
+
+        <TextView
+            android:id="@+id/app_item_download_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_download_num_str"
+            android:layout_alignBottom="@id/app_item_size"
+            android:layout_toRightOf="@id/app_item_size"
+            android:layout_marginLeft="12dp"
+            android:layout_marginBottom="3dp"
+
+            />
+
+        <!-- the button here we using the custom button
+             with progress attribute set -->
+        <com.singuloid.singuloidappstore.lib.button.AppManageBtn
+            android:id="@+id/btn_app_item_manage"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:textSize="18sp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="7dp"
+            android:padding="7dp"
+            android:text="@string/app_state_init"
+            btn:pb_textComplete="@string/app_state_downloaded"
+            btn:pb_textError="@string/app_state_error"
+            btn:pb_textProgress="@string/app_state_downloading"
+            btn:pb_colorComplete="@color/green_complete"
+            btn:pb_colorNormal="@color/blue_normal"
+            btn:pb_colorError="@color/red_error"
+            btn:pb_colorProgress="@color/purple_progress"
+            btn:pb_colorPressed="@color/blue_pressed"
+            />
+
+
+    </RelativeLayout>
+
+    <!-- adjust the RecyclerView size. If the image we received
+         from server are too large or too small, we need to resize
+          these drawable inside the RecyclerView adapter
+         -->
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/app_intro_gallery"
+        android:layout_width="match_parent"
+        android:layout_height="169dp"
+        android:layout_below="@id/app_market_item_container"
+        android:layout_marginTop="4dp">
+    </android.support.v7.widget.RecyclerView>
+
+    <TextView
+        android:id="@+id/app_item_version"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_version_str"
+        android:layout_below="@id/app_intro_gallery"
+        android:layout_marginTop="7dp"
+        android:textSize="14sp"
+
+        />
+
+    <TextView
+        android:id="@+id/app_update_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_update_date_str"
+        android:layout_alignBottom="@id/app_item_version"
+        android:layout_toRightOf="@id/app_item_version"
+        android:layout_marginLeft="17dp"/>
+
+    <TextView
+        android:id="@+id/app_intro_indi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/app_item_version"
+        android:text="@string/app_intro_indi_str"
+        android:layout_marginTop="18dp"
+        android:textSize="19sp"
+        />
+
+    <!-- the following expandableTextView are for the detailed
+         app introduction information -->
+    <com.singuloid.singuloidappstore.lib.view.ExpandableTextView
+        android:id="@+id/app_intro_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/app_intro_indi"
+        expandable:maxCollapsedLines="3">
+
+        <TextView
+            android:id="@id/expandable_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:fontFamily="sans-serif-light"
+            android:textSize="16sp"
+            android:textColor="#666666"/>
+
+        <ImageButton
+            android:id="@id/expand_collapse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:layout_gravity="right|bottom"
+            android:background="@android:color/transparent"/>
+
+    </com.singuloid.singuloidappstore.lib.view.ExpandableTextView>
+
+    <!-- the developer company and introduction information -->
+    <TextView
+        android:id="@+id/app_developer_indi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textSize="19sp"
+        android:layout_below="@id/app_intro_info"
+        android:layout_marginTop="8dp"
+        android:text="@string/app_developer_indi_str"/>
+
+    <TextView
+        android:id="@+id/app_developer_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/app_developer_indi"
+        android:layout_marginTop="9dp"
+        />
+
+</RelativeLayout>

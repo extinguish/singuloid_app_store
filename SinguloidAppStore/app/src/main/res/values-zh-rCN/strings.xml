@@ -5,12 +5,18 @@
     <string name="action_settings">设置</string>
 
     <string name="app_store_title">应用商店</string>
+    <string name="activity_app_management">应用管理</string>
 
     <!-- the following are the basic title of the AppStore fragment -->
     <string name="fragment_categoty_title_str">分类</string>
     <string name="fragment_rank_title_str">排名</string>
     <string name="fragment_newest_title_str">最新</string>
     <string name="fragment_manage_title_str">管理</string>
+    <string name="fragment_recommend_title_str">精选</string>
+
+    <string name="fragment_personal_installed_title_str">我的应用</string>
+    <string name="fragment_personal_download_manage_str">下载管理</string>
+
     <!-- the category of the apps -->
     <!-- we just predefined some types at here, and the value may add in the future -->
     <string name="app_category_tools_str">实用工具</string>
@@ -28,6 +34,7 @@
     <!-- the state of the app item -->
     <string name="app_market_open">打开</string>
     <string name="app_market_install">安装</string>
+    <string name="app_manage_uninstall">卸载</string>
 
     <!-- 每一个Item的管理状态-->
     <!-- 目前我们可以控制的状态只有三种，但是真正的状态可能不止三种
@@ -37,4 +44,11 @@
     <string name="app_state_downloading">暂停</string>
     <string name="app_state_error">错误</string>
 
+    <string name="system_app_reommendation">系统推荐</string>
+
+    <string name="app_version_str">版本 : %1$s </string>
+    <string name="app_download_num_str">下载次数 : %1$d </string>
+    <string name="app_update_date_str">更新日期 : %1$s </string>
+    <string name="app_intro_indi_str">产品简介</string>
+    <string name="app_developer_indi_str">开发者简介</string>
 </resources>

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <!-- build the layout for the recommendation -->
+    <LinearLayout
+        android:id="@+id/first_row"
+        android:layout_width="match_parent"
+        android:layout_height="124dp"
+        android:weightSum="2"
+        android:orientation="horizontal"
+        android:layout_margin="4dp"
+        android:padding="3dp"
+        >
+
+        <ImageView
+            android:id="@+id/recommendation_game"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="3dp"
+            android:src="@mipmap/game_category_img"
+            />
+
+        <ImageView
+            android:id="@+id/recommendation_newest"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="3dp"
+            android:src="@mipmap/newest_category_img"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/second_row"
+        android:layout_width="match_parent"
+        android:layout_height="124dp"
+        android:orientation="horizontal"
+        android:layout_below="@id/first_row"
+        android:weightSum="2"
+        android:layout_margin="4dp"
+        android:padding="3dp">
+
+        <ImageView
+            android:id="@+id/recommendation_tools"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="3dp"
+            android:src="@mipmap/tools_category_img"
+
+            />
+
+        <ImageView
+            android:id="@+id/recommendation_necessary"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="3dp"
+            android:src="@mipmap/necessary_category_img"
+            />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/system_app_reommendation"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="4dp"
+        android:padding="3dp"
+        android:layout_below="@id/second_row"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/system_recommendation_app_list"
+        android:layout_below="@id/tv_indicator"
+        android:layout_marginTop="3dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        >
+
+    </android.support.v7.widget.RecyclerView>
+
+</RelativeLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+

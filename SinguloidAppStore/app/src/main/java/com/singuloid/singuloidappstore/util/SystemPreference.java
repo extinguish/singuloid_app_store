@@ -11,6 +11,8 @@ import android.content.SharedPreferences;
  */
 public class SystemPreference implements SharedPreferences.OnSharedPreferenceChangeListener {
 
+
+
     private SharedPreferences mShaderPreference;
 
     private static SystemPreference sInstance;

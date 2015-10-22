@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,12 +14,14 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.singuloid.singuloidappstore.R;
+import com.singuloid.singuloidappstore.lib.DeletegateRefreshLayout;
+import com.singuloid.singuloidappstore.lib.ViewDelegate;
 import com.singuloid.singuloidappstore.lib.fragment.FragmentPagerItem;
 
 /**
  * Created by scguo on 15/10/16.
  */
-public class BaseFragment extends Fragment {
+public class BaseFragment extends Fragment implements ViewDelegate {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -31,16 +34,16 @@ public class BaseFragment extends Fragment {
         return inflater.inflate(R.layout.base_fragment_layout, container, false);
     }
 
-    private SwipeRefreshLayout mAppItemListRefreshableContainer;
+    private DeletegateRefreshLayout mAppItemListRefreshableContainer;
     private RecyclerView mAppItemList;
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         int position = FragmentPagerItem.getPosition(getArguments());
-        mAppItemListRefreshableContainer = (SwipeRefreshLayout) view.findViewById(R.id.app_market_refreshable_container);
-        mAppItemListRefreshableContainer.setColorSchemeColors(getResources().getIntArray(R.array.refresh_colors));
-        mAppItemListRefreshableContainer.setOnRefreshListener(new RefreshListener());
+        mAppItemListRefreshableContainer = (DeletegateRefreshLayout) view.findViewById(R.id.app_market_refreshable_container);
+
+        setupRefreshLayout();
 
         mAppItemList = (RecyclerView) view.findViewById(R.id.app_market_list);
         final LinearLayoutManager appListLayoutManager = new LinearLayoutManager(getActivity());
@@ -52,6 +55,13 @@ public class BaseFragment extends Fragment {
 
     }
 
+    // TODO: setup the delegate refresh layout
+    private void setupRefreshLayout() {
+        mAppItemListRefreshableContainer.setColorSchemeColors(getResources().getIntArray(R.array.refresh_colors));
+        mAppItemListRefreshableContainer.setOnRefreshListener(new RefreshListener());
+        this.mAppItemListRefreshableContainer.setViewDelegate(this);
+    }
+
     private void setupAdapter(final int position) {
         if (mAppItemList != null) {
             // set adapter for this RecyclerListView
@@ -59,9 +69,16 @@ public class BaseFragment extends Fragment {
         }
     }
 
+    @Override
+    public boolean isReadyForPull() {
+        return ViewCompat.canScrollVertically(mAppItemList, -1);
+    }
+
     private class RefreshListener implements SwipeRefreshLayout.OnRefreshListener {
         @Override
         public void onRefresh() {
+
+            // TODO: just for testing ...
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -74,7 +91,7 @@ public class BaseFragment extends Fragment {
                         mAppItemListRefreshableContainer.setRefreshing(false);
                     }
                 }
-            }, 3000);
+            }, 9000);
         }
     }
 

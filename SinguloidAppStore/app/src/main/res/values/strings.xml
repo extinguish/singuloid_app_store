@@ -5,13 +5,18 @@
     <string name="action_settings">Settings</string>
 
     <string name="app_store_title">App Store</string>
+    <string name="activity_app_management">App Management</string>
 
     <!-- the following are the basic title of the AppStore fragment -->
     <string name="fragment_categoty_title_str">Category</string>
     <string name="fragment_rank_title_str">Rank</string>
     <string name="fragment_newest_title_str">Newest</string>
     <string name="fragment_manage_title_str">Management</string>
-    
+    <string name="fragment_recommend_title_str">Recommendation</string>
+
+
+    <string name="fragment_personal_installed_title_str">My Apps</string>
+    <string name="fragment_personal_download_manage_str">Download Management</string>
     <!-- the category of the apps -->
     <!-- we just predefined some types at here, and the value may add in the future -->
     <string name="app_category_tools_str">Utilities</string>
@@ -29,6 +34,7 @@
     <!-- the state of the app item -->
     <string name="app_market_open">open</string>
     <string name="app_market_install">install</string>
+    <string name="app_manage_uninstall">Uninstall</string>
 
     <!-- the state of the app manage button -->
     <string name="app_state_init">Download</string>
@@ -36,4 +42,11 @@
     <string name="app_state_downloading">Pause</string>
     <string name="app_state_error">Error</string>
 
+    <string name="system_app_reommendation">System Recommendation</string>
+
+    <string name="app_version_str">Version : %1$s </string>
+    <string name="app_download_num_str">Download : %1$d </string>
+    <string name="app_update_date_str">Update at : %1$s </string>
+    <string name="app_intro_indi_str">Product Introduction</string>
+    <string name="app_developer_indi_str">Developer Info</string>
 </resources>

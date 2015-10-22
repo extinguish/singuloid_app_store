@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.SwipeRefreshLayout
+<com.singuloid.singuloidappstore.lib.DeletegateRefreshLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/category_refresh_container"
     android:layout_width="match_parent"
@@ -22,4 +22,4 @@
         >
     </GridView>
 
-</android.support.v4.widget.SwipeRefreshLayout>
+</com.singuloid.singuloidappstore.lib.DeletegateRefreshLayout>
